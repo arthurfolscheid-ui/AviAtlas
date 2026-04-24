@@ -1,97 +1,66 @@
-// --- 1. Mock Database of Aircraft ---
-const aircraftData = [
-    {
-        name: "SR-71 Blackbird",
-        type: "Military",
-        description: "A strategic reconnaissance aircraft capable of flying at Mach 3+ and extreme altitudes.",
-        image: "https://images.unsplash.com/photo-1543362143-6d0061e80938?q=80&w=800&auto=format&fit=crop"
-    },
-    {
-        name: "Boeing 747",
-        type: "Commercial",
-        description: "Known as the 'Queen of the Skies', a large, long-range wide-body airliner.",
-        image: "https://images.unsplash.com/photo-1569154941061-e231b4732ef1?q=80&w=800&auto=format&fit=crop"
-    },
-    {
-        name: "P-51 Mustang",
-        type: "Historic",
-        description: "An American long-range, single-seat fighter and fighter-bomber used during WWII.",
-        image: "https://images.unsplash.com/photo-1582292025686-21820a02efdb?q=80&w=800&auto=format&fit=crop"
-    },
-    {
-        name: "Concorde",
-        type: "Commercial",
-        description: "A legendary British-French turbojet-powered supersonic passenger airliner.",
-        image: "https://images.unsplash.com/photo-1620023445989-1fc7b1d9bf5b?q=80&w=800&auto=format&fit=crop"
-    },
-    {
-        name: "F-22 Raptor",
-        type: "Military",
-        description: "A fifth-generation, single-seat, twin-engine, all-weather stealth tactical fighter aircraft.",
-        image: "https://images.unsplash.com/photo-1605335122709-6bc2e8412dc0?q=80&w=800&auto=format&fit=crop"
-    },
-    {
-        name: "Cessna 172",
-        type: "Private",
-        description: "The most successful aircraft in history, widely used for flight training and personal use.",
-        image: "https://images.unsplash.com/photo-1596326168545-316f73e72352?q=80&w=800&auto=format&fit=crop"
+let aircraftData = [];
+
+// Fetch data from our JSON file
+async function loadAircraft() {
+    try {
+        const response = await fetch('data.json');
+        aircraftData = await response.json();
+        renderCards(aircraftData);
+    } catch (error) {
+        console.error("Error loading aircraft data:", error);
     }
-];
+}
 
-// --- 2. Element Selectors ---
-const aircraftGrid = document.getElementById('aircraftGrid');
-const searchInput = document.getElementById('searchInput');
-const resultCount = document.getElementById('resultCount');
-
-// --- 3. Function to Render Cards ---
-function renderCards(aircraftArray) {
-    aircraftGrid.innerHTML = ''; // Clear current grid
+function renderCards(data) {
+    const grid = document.getElementById('aircraftGrid');
+    grid.innerHTML = '';
     
-    if(aircraftArray.length === 0) {
-        aircraftGrid.innerHTML = `<p style="color: #94a3b8; grid-column: 1/-1; text-align: center;">No aircraft found matching your search.</p>`;
-        resultCount.textContent = "0 results";
-        return;
-    }
-
-    resultCount.textContent = `Showing ${aircraftArray.length} aircraft`;
-
-    aircraftArray.forEach((plane, index) => {
-        // Create the card div
+    data.forEach(plane => {
         const card = document.createElement('div');
         card.className = 'plane-card';
-        // Add a slight animation delay to each card so they cascade in
-        card.style.animation = `fadeUp 0.6s ease-out ${index * 0.1}s forwards`;
-        card.style.opacity = '0'; 
-        card.style.transform = 'translateY(20px)';
-
         card.innerHTML = `
-            <div class="card-image" style="background-image: url('${plane.image}')">
-                <span class="badge">${plane.type}</span>
-            </div>
+            <div class="card-image" style="background-image: url('${plane.image}')"></div>
             <div class="card-info">
                 <h3>${plane.name}</h3>
                 <p>${plane.description}</p>
-                <button class="btn-readmore">View Specs</button>
+                <button onclick="openDetails('${plane.id}')" class="btn-readmore">Full Specs</button>
             </div>
         `;
-        aircraftGrid.appendChild(card);
+        grid.appendChild(card);
     });
 }
 
-// --- 4. Live Search Event Listener ---
-searchInput.addEventListener('input', (e) => {
-    const searchTerm = e.target.value.toLowerCase();
+// Modal Logic
+const modal = document.getElementById("planeModal");
+const closeModal = document.querySelector(".close-modal");
+
+function openDetails(id) {
+    const plane = aircraftData.find(p => p.id === id);
+    const body = document.getElementById("modalBody");
     
-    // Filter the array based on name or type
-    const filteredAircraft = aircraftData.filter(plane => {
-        return plane.name.toLowerCase().includes(searchTerm) || 
-               plane.type.toLowerCase().includes(searchTerm);
-    });
-    
-    renderCards(filteredAircraft);
+    body.innerHTML = `
+        <div class="modal-grid">
+            <img src="${plane.image}" style="width:100%; border-radius:15px;">
+            <div class="modal-info">
+                <h2>${plane.name}</h2>
+                <div class="spec-box"><strong>Origin:</strong> ${plane.origin}</div>
+                <div class="spec-box"><strong>Top Speed:</strong> ${plane.topSpeed}</div>
+                <div class="spec-box"><strong>Range:</strong> ${plane.range}</div>
+                <p style="margin-top:20px;">${plane.history}</p>
+            </div>
+        </div>
+    `;
+    modal.style.display = "block";
+}
+
+closeModal.onclick = () => modal.style.display = "none";
+window.onclick = (event) => { if (event.target == modal) modal.style.display = "none"; }
+
+// Search Logic
+document.getElementById('searchInput').addEventListener('input', (e) => {
+    const term = e.target.value.toLowerCase();
+    const filtered = aircraftData.filter(p => p.name.toLowerCase().includes(term));
+    renderCards(filtered);
 });
 
-// --- 5. Initial Render on Page Load ---
-window.addEventListener('DOMContentLoaded', () => {
-    renderCards(aircraftData);
-});
+loadAircraft();
