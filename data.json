@@ -1,0 +1,35 @@
+[
+    {
+        "id": "sr71",
+        "name": "SR-71 Blackbird",
+        "type": "Military",
+        "origin": "USA",
+        "topSpeed": "Mach 3.3",
+        "range": "5,400 km",
+        "description": "The fastest air-breathing manned aircraft in history, used for strategic reconnaissance.",
+        "history": "Developed by Lockheed's Skunk Works, it operated at speeds and altitudes that allowed it to outrun surface-to-air missiles.",
+        "image": "https://images.unsplash.com/photo-1543362143-6d0061e80938?auto=format&fit=crop&w=800"
+    },
+    {
+        "id": "a380",
+        "name": "Airbus A380",
+        "type": "Commercial",
+        "origin": "Europe",
+        "topSpeed": "945 km/h",
+        "range": "15,200 km",
+        "description": "The world's largest passenger airliner, a double-deck wide-body jet.",
+        "history": "Designed to challenge Boeing's monopoly in the large-aircraft market, it first flew in 2005.",
+        "image": "https://images.unsplash.com/photo-1569154941061-e231b4732ef1?auto=format&fit=crop&w=800"
+    },
+    {
+        "id": "f22",
+        "name": "F-22 Raptor",
+        "type": "Military",
+        "origin": "USA",
+        "topSpeed": "Mach 2.25",
+        "range": "3,000 km",
+        "description": "A fifth-generation stealth tactical fighter aircraft.",
+        "history": "The Raptor is a critical component of the USAF, combining stealth, supercruise, and maneuverability.",
+        "image": "https://images.unsplash.com/photo-1605335122709-6bc2e8412dc0?auto=format&fit=crop&w=800"
+    }
+]
