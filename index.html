@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avi Atlas | The Ultimate Aircraft Encyclopedia</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo"><i class="fa-solid fa-plane-departure"></i> Avi Atlas</div>
+        <ul class="nav-links">
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#">Categories</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="animate-up">Explore the Skies</h1>
+            <p class="animate-up delay-1">The definitive encyclopedia for commercial, military, and historic aviation.</p>
+            
+            <div class="search-container animate-up delay-2">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Search aircraft (e.g., Boeing, Fighter...)">
+            </div>
+        </div>
+    </header>
+
+    <section class="featured-section">
+        <div class="section-header">
+            <h2>Aircraft Library</h2>
+            <p id="resultCount">Showing all aircraft</p>
+        </div>
+        
+        <div class="grid-container" id="aircraftGrid"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Avi Atlas. Built for aviation enthusiasts.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
